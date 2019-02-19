@@ -47,7 +47,8 @@ def parse(graph,tweet):
 	try:
 		graph.node[author]["tweets"]+=1
 	except: #if not author in graph.node:
-		graph.add_node(author,{"followers":followers,"friends":friends,"location":location,"timzone":timezone,"utc_offset":utc,"tweets":1})
+		attr = {"followers":followers,"friends":friends,"location":location,"timzone":timezone,"utc_offset":utc,"tweets":1}
+		graph.add_node(author, **attr)
 	
 	for target in other_users:
 		try:
@@ -69,7 +70,7 @@ for file in sys.argv[1:]:
 		for tweet in j["statuses"]:
 			parse(graph,tweet)
 	else:
-		parse(j)
+		#parse(j)
 		for line in fhb:
 			#We have search API, each line is a json object
 			parse(graph,json.loads(line))
